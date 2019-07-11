@@ -36,7 +36,7 @@
 # 
 # 提示：记得使用 notebook 中的魔法指令 `%matplotlib inline`，否则会导致你接下来无法打印出图像。
 
-# In[2]:
+# In[1]:
 
 
 import pandas as pd
@@ -62,7 +62,7 @@ movie_data=pd.read_csv('tmdb-movies.csv')
 # 
 # 
 
-# In[3]:
+# In[2]:
 
 
 movie_data.isnull().sum()
@@ -70,7 +70,7 @@ movie_data.head()
 movie_data.describe()
 
 
-# In[4]:
+# In[3]:
 
 
 movie_data.isnull().sum()
@@ -84,7 +84,7 @@ movie_data.isnull().sum()
 # 
 # 任务：使用适当的方法来清理空值，并将得到的数据保存。
 
-# In[5]:
+# In[4]:
 
 
 movie_data = movie_data.fillna('unknown')
@@ -111,7 +111,7 @@ movie_data = movie_data.fillna('unknown')
 # 
 # 要求：每一个语句只能用一行代码实现。
 
-# In[7]:
+# In[5]:
 
 
 movie_data.loc[:,['id','popularity','budget','runtime','vote_average']]
@@ -130,7 +130,7 @@ movie_data.loc[49:59,'popularity']
 # 
 # 要求：请使用 Logical Indexing实现。
 
-# In[14]:
+# In[6]:
 
 
 movie_data[movie_data['popularity']>5]
@@ -146,7 +146,7 @@ movie_data[(movie_data['popularity'])>5&(movie_data['release_year']>1996)]
 # 
 # 要求：使用 `Groupby` 命令实现。
 
-# In[28]:
+# In[7]:
 
 
 revenue_by_year = movie_data.groupby('release_year').agg('mean').revenue
@@ -172,22 +172,40 @@ director_popularity = movie_data.groupby('director').agg('mean').sort_values(by=
 
 # **任务3.1：**对 `popularity` 最高的20名电影绘制其 `popularity` 值。
 
-# In[29]:
+# In[12]:
 
 
-director_popularity.head(20).plot.bar()
+#director_popularity.head(20).plot.bar()
+#director_popularity.head(20)
+#movie_data.sort_values(by='popularity', ascending=False).popularity.head(20)
+top_20_movie_sorted_by_popularity = movie_data.sort_values(by='popularity', ascending=False).head(20)
+
+plt.figure(figsize = [15, 5])
+plt.bar(top_20_movie_sorted_by_popularity.original_title,top_20_movie_sorted_by_popularity.popularity)
+plt.title('Top 20 Movies')
+plt.ylabel('Popularity')
+plt.xlabel('Movie');
+plt.xticks(rotation='vertical')
+plt.show();
+
+# Question: 这里x轴的label竖着虽然能显示，但是还是看着不舒服，整个figure怎样能完成顺时针90度旋转？
 
 
 # ---
 # **任务3.2：**分析电影净利润（票房-成本）随着年份变化的情况，并简单进行分析。
 
-# In[27]:
+# In[13]:
 
 
 budget_by_year = movie_data.groupby('release_year').agg('mean').budget
 profit_by_year = revenue_by_year - budget_by_year
 plt.figure(figsize = [15, 5])
-profit_by_year.plot.bar()
+#profit_by_year.plot.bar()
+plt.bar(profit_by_year.index,profit_by_year.values)
+plt.title('Profit History')
+plt.ylabel('Profit')
+plt.xlabel('Release Year')
+plt.show()
 # 整体来看，电影净利润随年份呈现上涨趋势
 
 

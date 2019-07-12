@@ -62,15 +62,25 @@ movie_data=pd.read_csv('tmdb-movies.csv')
 # 
 # 
 
-# In[2]:
+# In[26]:
 
 
-movie_data.isnull().sum()
+# Q1
+movie_data.shape
+# Q2
 movie_data.head()
+movie_data.tail()
+movie_data.sample()
+# Q3
+movie_data.dtypes
+# Q4
+movie_data.isnull().sum()
+movie_data.isnull().any()
+# Q5 
 movie_data.describe()
 
 
-# In[3]:
+# In[23]:
 
 
 movie_data.isnull().sum()
@@ -111,11 +121,11 @@ movie_data = movie_data.fillna('unknown')
 # 
 # 要求：每一个语句只能用一行代码实现。
 
-# In[5]:
+# In[29]:
 
 
 movie_data.loc[:,['id','popularity','budget','runtime','vote_average']]
-movie_data[0:20].append(movie_data[47:59])
+movie_data[0:20].append(movie_data[47:49])
 movie_data.loc[49:59,'popularity']
 
 
